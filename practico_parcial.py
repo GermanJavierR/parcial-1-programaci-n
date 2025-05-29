@@ -47,8 +47,8 @@ def cargar_matriz_notas(cantidad_de_alumnos, cantidad_de_notas):
         for i in range(cantidad_de_alumnos):  # Recorro la cantidad de alumnos que tengo.
             for j in range(cantidad_de_notas): # Recorro cada nota que tiene el alumno.
                 nota_del_alumnos = input(f"Por favor, ingrese la nota del examen número {j + 1} alumno {i + 1}: ")
-                while not es_entero(nota_del_alumnos) and not es_nota_valida(nota_del_alumnos):  # si la nota ingresado no es valida, dice que no a ingresado una nota valida.
-                    print("La nota ingresada no es valida.")
+                while not es_entero(nota_del_alumnos) and es_nota_valida(nota_del_alumnos):  # si la nota ingresado no es valida, dice que no a ingresado una nota valida.
+                    print("El valor ingresado no es valido.")
                     nota_del_alumnos = input(f"Por favor, ingrese la nota del examen número {j + 1} alumnos: ")
                 nota_del_alumnos = int(nota_del_alumnos) # el usuario ingresa la nota del alumno.
                 matriz_alumnos[i][j] = nota_del_alumnos # le asigno la la nota correspondiente al alumnno.
@@ -56,7 +56,7 @@ def cargar_matriz_notas(cantidad_de_alumnos, cantidad_de_notas):
         print(matriz_alumnos) # Imprimo la matriz de con los valores ingresados
 
 
-cargar_matriz_notas(alumnos,examenes)
+cargar_matriz_notas(alumnos, examenes)
 
 # filas = 3
 # columnas = 6
