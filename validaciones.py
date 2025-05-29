@@ -5,5 +5,5 @@ def es_entero(valor):
         return valor.isdigit()
 
 
-def s_nota_valida(numero):
+def es_nota_valida(numero):
     return 1 <= numero <= 10
