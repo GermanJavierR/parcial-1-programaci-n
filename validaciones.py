@@ -6,10 +6,12 @@ def es_entero(valor):
     else:
         return False
 
+
 def es_nota_valida(numero):
     if es_entero(numero):
-        return 1 <= numero <= 10
-    
+        valor = int(numero)
+        return 1 <= valor <= 10
+
 
 def es_una_lista(valor):
     if type(valor) == list:

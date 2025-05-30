@@ -17,79 +17,47 @@ doble.
 - Nombrar las funciones tal como se indican a continuación.
 """
 
-from validaciones import es_entero, es_nota_valida
+from parametros_de_la_matriz import ingresar_valor_valido
+from cargar_matriz_de_notas import cargar_matriz_notas
+from porcentaje_de_aprobados import porcentaje_aprobados
+from mejor_promedio import mejor_promedio
+from buscar_nota import buscar_nota
 
-"""
-1 – Función cargar_matriz_notas(): Recibe dos enteros n y m y permite
-cargar n x m notas válidas entre 1 y 10 inclusive. La validación debe
-hacerse dentro de esta función.
-"""
+alumnos = ingresar_valor_valido()
+examenes = ingresar_valor_valido()
 
+matriz_alumnos = [[0 for n in range(examenes)] for a in range(alumnos)]
 
-alumnos = 3
-examenes = 6
-
-matriz_alumnos = [[0 for a in range(examenes)] for c in range(alumnos)]
-
-
-
-def cargar_matriz_notas(cantidad_de_alumnos, cantidad_de_notas):
+def menu(matriz): # ingreso la matriz que con la que voy a operar.
     """
-    Propósito: cargar la matriz con los alumnos dados y la cantidad de notas dadas.
-    Parametros: 
-        alumnos (int): la cantidad de alumnos que se va a ingresar a la matriz
-        canitidad (int): la cantidad de alumnos que se va a cargar a cada alumno.
-    return: una matriz cargada con los datos dados.
+    Propósito: indicarle al usuario cuales son las acciones que puede ejecutar.
+    Return: valor de lo que ingreso el usuario.
     """
-
-    if es_entero(cantidad_de_alumnos) and es_entero(cantidad_de_notas): # Valido si ambos numero ingresado son número enteros
-
-        for i in range(cantidad_de_alumnos):  # Recorro la cantidad de alumnos que tengo.
-            for j in range(cantidad_de_notas): # Recorro cada nota que tiene el alumno.
-                nota_del_alumnos = input(f"Por favor, ingrese la nota del examen número {j + 1} alumno {i + 1}: ")
-                while not es_entero(nota_del_alumnos):
-                    print("El valor ingresado no es valido.")
-                    nota_del_alumnos = input(f"Por favor, ingrese la nota del examen número {j + 1} alumnos: ")
-                nota_del_alumnos = int(nota_del_alumnos) # el usuario ingresa la nota del alumno.
-                while not es_nota_valida(nota_del_alumnos):  # si la nota ingresado no es valida, dice que no a ingresado una nota valida.
-                    print("El valor ingresado no es valido.")
-                    nota_del_alumnos = input(f"Por favor, ingrese la nota del examen número {j + 1} alumnos: ")
-                matriz_alumnos[i][j] = nota_del_alumnos # le asigno la la nota correspondiente al alumnno.
-
-        print(matriz_alumnos) # Imprimo la matriz de con los valores ingresados
-
-
-cargar_matriz_notas(alumnos, examenes)
-
-# filas = 3
-# columnas = 6
-
-# matriz_alumnos = [[0 for a in range(columnas)] for c in range(filas)]
-# print(matriz_alumnos)
-
-"""
-2 – Función porcentaje_aprobados(): Calcula el porcentaje de
-exámenes aprobados (nota ≥ 6) por cada alumno y muestra un resumen
-individual. Usar contadores y acumuladores.
-"""
-
-def porcentaje_aprobados(matriz_de_alumnos):
-    """
-    Propósito: indicar cual es el porcentaje de examenes aprobados que tiene cada alumno.
-    Parametros:
-        matriz_de_alumnos (list): matriz de alumnos que se va a procesar
-    Return: retorna un resumen de cada alumno con la cantidad de notas aprobadas y el porcentaje de aprobados que tiene.
-    """
-
-    for i in range(len(matriz_de_alumnos)): # Recorro tantas veces como la cantidad de alumnos que tengo
-        examenes_totales = len(matriz_de_alumnos[i]) # Establesco la canitdad total de examenes del alumno
-        examenes_aprobados = 0 # inicializo la variable de la cantidad examenes que aprobo el alumno
-        for j in matriz_de_alumnos[i]:
-            if j >= 6: # Verifico si la nota actual es aprobada o no.
-                examenes_aprobados += 1 # Si está aprobado entonces suma uno.
-        porcentaje_de_aprobadas_del_alumno = round(examenes_aprobados * 100 / examenes_totales, 2) # realizo la operación para sacar el porcentaje 
-        print(f"El alumno {i + 1} aprobo {examenes_aprobados}, su porcentaje de aprobados es de {porcentaje_de_aprobadas_del_alumno}%") #Doy la descripción del alumno. 
+    print("Bienvenido, las operación que puede realizar son: ")
+    print("1. Cargar la matriz de alumnos.")
+    print("2. Mostrar el porcentaje de aprobación de cada alumno.")
+    print("3. Mostrar el alumno con mejor promedio.")
+    print("4. Buscar las ubicaciones donde aparece una nota en especifica.")
+    continuar = "si"
+    while continuar != "no":
+        opcion_a_realizar = input("Por favor, ingrese el número de la operación que desee realizar: ")
+        match opcion_a_realizar:
+            case "1":
+                matriz = cargar_matriz_notas(alumnos, examenes)
+                continuar = input("Desea realizar otra operación? 'Si/No': ").lower()
+            case "2":
+                porcentaje_aprobados(matriz)
+                continuar = input("Desea realizar otra operación? 'Si/No': ").lower()
+            case "3":
+                mejor_promedio(matriz)
+                continuar = input("Desea realizar otra operación? 'Si/No': ").lower()
+            case "4":
+                nota_a_buscar = input("Por favor, ingrese la nota que desea buscar: ")
+                print(buscar_nota(matriz, nota_a_buscar))
+                continuar = input("Desea realizar otra operación? 'Si/No': ").lower()
+            case _:
+                print("El valor ingresado no corresponde algunas de las opciones validas.")
+                continuar = input("Desea realizar otra operación? 'Si/No': ").lower()
 
 
-porcentaje_aprobados(matriz_alumnos)
-
+menu(matriz_alumnos)
